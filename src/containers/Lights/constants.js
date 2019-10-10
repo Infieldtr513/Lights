@@ -1,4 +1,4 @@
-const LIGHTS = [{
+export const LIGHTS = [{
     id:1,
     name: "Kitchen Light",
     control: {
@@ -75,3 +75,4 @@ const LIGHTS = [{
         "Nobodys Home": false
     }
 }]
+
