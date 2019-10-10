@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 ReactDOM.render(
-  <Connector mqttProps={"ws://localhost:9001"}>
+  <Connector mqttProps="ws://localhost:9001">
     <App />
   </Connector>,
   document.getElementById('root')

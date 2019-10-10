@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react'
 import { Table } from 'react-bootstrap'
-import { LIGHTS } from "./constants"
 import { mapContextToProps } from 'react-context-toolbox';
 import { map } from 'lodash'
 import { Link } from 'react-router-dom'
 
-function Lights(){
+function Lights({lights}){
     return(
         <div>
          <Table striped bordered hover>
@@ -16,7 +15,7 @@ function Lights(){
                 </tr>
             </thead>
             <tbody>
-                {map(LIGHTS, light =>              
+                {map(lights, light =>              
                     <tr>                          
                         <td> 
                             <Link to={`/lights/${light.id}`}>{light.name} </Link>

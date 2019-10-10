@@ -4,6 +4,7 @@ export const LIGHTS = [{
     control: {
         circuit: "1",
         controller: "1",
+        value:1,
         pin: 1
     },
     isOn: false,
@@ -19,6 +20,7 @@ export const LIGHTS = [{
     control: {
         circuit: "1",
         controller: "1",
+        value:2,
         pin: 2
     },
     isOn: false,

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { reduce } from 'lodash'
+import { reduce, findIndex } from 'lodash'
 import './App.css';
 import { subscribe } from 'mqtt-react';
 import Lights from "./containers/Lights"
@@ -11,9 +11,24 @@ import {
   Link
 } from "react-router-dom";
 import { Nav } from 'react-bootstrap'
+import { LIGHTS } from "./containers/Lights/constants";
 
-function App({ mqtt }){
-  
+function App( { mqtt } ){ 
+  const [lightDisplay, setLightDisplay] = useState(LIGHTS)
+
+  const publishToggle = () => {
+    mqtt.publish("/lights", "255")
+  }
+
+  const handleLightChange = (lightId) => {
+    const newLightDisplay = [...lightDisplay]
+    const lightIndex = findIndex(newLightDisplay, light => light.id == lightId)
+    
+    newLightDisplay[lightIndex].isOn = !newLightDisplay[lightIndex].isOn
+    setLightDisplay(newLightDisplay)
+    publishToggle()
+  }
+
   return (
     <div className="App">
       <Router>
@@ -24,20 +39,22 @@ function App({ mqtt }){
       </Nav>
       <div>
         <Switch>
-        <Route path="/lights/:id" component={Light} />             
-        <Route path="/lights" component={Lights}/>                 
+        <Route path="/lights/:id" render={props => 
+          <Light {...props} handleLightChange={handleLightChange} lights={lightDisplay}/>
+        }/>                  />             
+        <Route path="/lights" render={props => 
+          <Lights {...props} lights={lightDisplay}/>
+        }/>                 
         </Switch>
       </div>
     </Router>
     </div>   
   );
 }
-
 export default subscribe({
-  topic: "/lights"
-})(App);
-
-
+  topic: '/lights'
+})(App)
+  // topic: "/lights"
 
 
 // lightAccumulator += Math.pow(2, 
